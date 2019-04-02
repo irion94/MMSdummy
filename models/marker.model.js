@@ -7,7 +7,8 @@ const MarkerSchema = new Schema(
         date: Date,
         name: String,
         color: String,
-        photo: [String],
+        recognized: Number,
+        photo: String,
         coordinates: {}
     }
 );
