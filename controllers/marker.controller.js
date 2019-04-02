@@ -21,7 +21,7 @@ module.exports.create = async function (req, res, next) {
     const save = await marker.save();
     if (save) {
         const deletionDate = moment().minute(new Date().getMinutes() - 5).format();
-        const markers = await Recognized.find({date: {$lt: deletionDate}, recognized: {$gt: -1}});
+        const markers = await Recognized.find({date: {$gt: deletionDate}, recognized: {$gt: -1}});
         return res.status(201).json(markers)
     }
     return res.status(401)
@@ -30,7 +30,9 @@ module.exports.create = async function (req, res, next) {
 
 module.exports.get = async function (req, res) {
     const deletionDate = moment().minute(new Date().getMinutes() - 5).format();
-    const markers = await Recognized.find({date: {$lt: deletionDate}});
+    console.log(deletionDate)
+    const markers = await Recognized.find({date: {$gt: deletionDate}, recognized:{$gt: -1}});
+    console.log(markers)
     if (markers.length) return res.status(201).json(markers);
     return res.status(401).json({status:"Not Found"})
 }
